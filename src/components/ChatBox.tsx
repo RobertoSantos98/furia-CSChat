@@ -35,7 +35,7 @@ const ChatBox: React.FC = () => {
         {messages.map((msg, index) => (
           <div key={index} className={`message-container ${msg.sender === 'user' ? 'user' : 'bot'}`}>
             <div className={`message-bubble ${msg.sender === 'user' ? 'user-message' : 'bot-message'}`}>
-              {msg.text}
+            <span dangerouslySetInnerHTML={{ __html: msg.text.replace(/\n/g, '<br />') }} />
             </div>
           </div>
         ))}

@@ -1,18 +1,77 @@
 [
-    {
-      "question": "Qual jogador da FURIA é conhecido como \"KSCERATO\"?",
-      "options": ["A) Yuri", "B) arT", "C) KSCERATO", "D) FalleN"],
-      "answer": "c"
-    },
-    {
-      "question": "Qual país é a sede principal da FURIA?",
-      "options": ["A) Brasil", "B) EUA", "C) Canadá", "D) Alemanha"],
-      "answer": "a"
-    },
-    {
-      "question": "Quem é o IGL (in-game leader) da FURIA atualmente?",
-      "options": ["A) KSCERATO", "B) yuurih", "C) arT", "D) FalleN"],
-      "answer": "c"
-    }
-  ]
-  
+  {
+    "question": "Qual jogador da FURIA é conhecido como \"KSCERATO\"?",
+    "options": ["Yuri", "arT", "KSCERATO", "FalleN"],
+    "answer": "c"
+  },
+  {
+    "question": "Qual país é a sede principal da FURIA?",
+    "options": ["Brasil", "EUA", "Canadá", "Alemanha"],
+    "answer": "a"
+  },
+  {
+    "question": "Quem é o IGL (in-game leader) da FURIA atualmente?",
+    "options": ["KSCERATO", "yuurih", "arT", "FalleN"],
+    "answer": "c"
+  },
+  {
+    "question": "Qual é o nome completo do jogador KSCERATO?",
+    "options": ["Kaike Silva Cerato", "Kaio Santos Cerato", "Kairo Souza Cerato", "Kael Simões Cerato"],
+    "answer": "a"
+  },
+  {
+    "question": "Em que ano a FURIA foi fundada?",
+    "options": ["2015", "2016", "2017", "2018"],
+    "answer": "c"
+  },
+  {
+    "question": "Quem é um dos fundadores da FURIA?",
+    "options": ["Gabriel \"FalleN\" Toledo", "Jaime Pádua", "André Akkari", "Marcelo \"coldzera\" David"],
+    "answer": "b"
+  },
+  {
+    "question": "Qual destes jogadores já atuou como AWP da FURIA?",
+    "options": ["arT", "yuurih", "fer", "coldzera"],
+    "answer": "a"
+  },
+  {
+    "question": "Quais jogos a FURIA possui times ativos?",
+    "options": ["Apenas CS", "CS e LoL", "CS, Valorant, Apex e mais", "Apenas Valorant"],
+    "answer": "c"
+  },
+  {
+    "question": "Qual animal representa o símbolo da FURIA?",
+    "options": ["Leão", "Pantera", "Águia", "Tigre"],
+    "answer": "b"
+  },
+  {
+    "question": "Qual desses torneios internacionais a FURIA já participou?",
+    "options": ["IEM Katowice", "DreamHack Dallas", "ECS Finals", "Todos os anteriores"],
+    "answer": "d"
+  },
+  {
+    "question": "Qual a função principal do jogador yuurih?",
+    "options": ["AWP", "IGL", "Entry Fragger", "Rifler"],
+    "answer": "d"
+  },
+  {
+    "question": "Qual o site oficial da FURIA?",
+    "options": ["www.furiaesports.com", "www.furia.gg", "www.furia.com.br", "www.furiaesports.gg"],
+    "answer": "b"
+  },
+  {
+    "question": "Qual é o nome da arena e centro de treinamento da FURIA em São Paulo?",
+    "options": ["FURIA House", "Pantera Arena", "Base FURIA", "FURIA Training Center"],
+    "answer": "c"
+  },
+  {
+    "question": "Em que país a FURIA estabeleceu sua primeira gaming house internacional?",
+    "options": ["Alemanha", "Estados Unidos", "Canadá", "Espanha"],
+    "answer": "b"
+  },
+  {
+    "question": "Qual é o lema frequentemente usado pela FURIA?",
+    "options": ["Rise Above", "Go FURIA", "Born to Win", "Menos Ego, Mais Resultado"],
+    "answer": "d"
+  }
+]
