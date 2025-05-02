@@ -21,7 +21,7 @@ export const curiosityStrategy = (msg?: string): Message => {
 
   const input = msg.trim().toLowerCase();
 
-  if (input === 'mais' || input ==='+') {
+  if (input.includes("mais") || input.includes('+')) {
     currentCuriosityIndex++;
 
     if (currentCuriosityIndex >= curiosities.length) {

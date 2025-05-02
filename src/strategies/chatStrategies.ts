@@ -3,10 +3,10 @@ import { curiosityStrategy } from './curiosityStrategy';
 import { quizStrategy } from './quizStrategy';
 import { upcomingGamesStrategy } from './upComingGameStrategy';
 import { playersStrategy } from './playersStrategy';
-import { torcidaStrategy } from './torcidaStrategy';
+
 import { Message } from '../types/message';
 
-let currentState: 'menu' | 'quiz' | 'game' | 'curiosity' | 'waitingAnswer' = 'menu';
+let currentState: 'menu' | 'quiz' | 'game' | 'curiosity'| 'agenda' | 'waitingAnswer' = 'menu';
 
 export const getBotResponse = (msg: string): Message => {
   const lowerMsg = msg.toLowerCase();
@@ -19,7 +19,7 @@ export const getBotResponse = (msg: string): Message => {
     };
   }
 
-
+  // Estados com sequência de "mais"
   if (currentState === 'quiz') {
     const response = quizStrategy(msg);
     if (response.text.includes('Fim') || response.text.includes('Desisto')) {
@@ -28,31 +28,40 @@ export const getBotResponse = (msg: string): Message => {
     return response;
   }
 
+  if (currentState === 'curiosity') {
+    return curiosityStrategy(msg);
+  }
+
+  if (currentState === 'game') {
+    return gameStrategy(msg);
+  }
+
+  if (currentState === 'agenda') {
+    return upcomingGamesStrategy(msg); 
+  }
+
   if (lowerMsg.includes('quiz')) {
     currentState = 'quiz';
     return quizStrategy(); 
   }
 
-  if (lowerMsg.includes('jogo') || lowerMsg.includes('partida')) {
+  if (lowerMsg.includes('jogo passado') || lowerMsg.includes('partida')) {
     currentState = 'game';
     return gameStrategy();
   }
 
-  if (lowerMsg.includes('curiosidade') || lowerMsg.includes('curiosidade')) {
-    currentState = 'curiosity';
-    return curiosityStrategy(msg);
+  if (lowerMsg.includes('jogo futuro') || lowerMsg.includes('agenda') || lowerMsg.includes('próximo')) {
+    currentState = 'agenda';
+    return upcomingGamesStrategy();
   }
 
-  if (lowerMsg.includes('próximos jogos') || lowerMsg.includes('agenda')) {
-    return upcomingGamesStrategy();
+  if (lowerMsg.includes('curiosidade')) {
+    currentState = 'curiosity';
+    return curiosityStrategy();
   }
 
   if (lowerMsg.includes('jogadores') || lowerMsg.includes('time')) {
     return playersStrategy();
-  }
-
-  if (lowerMsg.includes('torcida') || lowerMsg.includes('simular')) {
-    return torcidaStrategy();
   }
 
   return {
@@ -60,3 +69,4 @@ export const getBotResponse = (msg: string): Message => {
     text: 'Não entendi. Você pode perguntar sobre: jogos, curiosidades, quiz, agenda, jogadores ou torcida.'
   };
 };
+
