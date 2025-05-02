@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Message } from '../types/message';
-import { gameStrategy, curiosityStrategy, quizStrategy, defaultStrategy, handleQuizResponse } from '../strategies/chatStrategies';
+import { getBotResponse } from '../strategies/chatStrategies';
 
 const ChatBox: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
@@ -11,70 +11,22 @@ const ChatBox: React.FC = () => {
   ]);
 
   const [input, setInput] = useState<string>('');
-  const [chatState, setChatState] = useState<'menu' | 'quiz' | 'game' | 'curiosity' | 'waitingAnswer'>('menu'); // Controla o estado do chat
+ 
   const chatEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-
   const handleSend = () => {
     if (input.trim() === '') return;
 
     const userMessage: Message = { sender: 'user', text: input };
+
     const botResponse: Message = getBotResponse(input);
 
     setMessages((prevMessages) => [...prevMessages, userMessage, botResponse]);
     setInput('');
-  };
-
-  const getBotResponse = (msg: string): Message => {
-    msg = msg.toLowerCase();
-
- 
-    if (chatState === 'waitingAnswer') {
-      return handleQuizResponse(msg);
-    }
-
-    if (chatState === 'menu') {
-      if (msg.includes('jogo') || msg.includes('partida')) {
-        setChatState('game');
-        return gameStrategy();
-      }
-      if (msg.includes('curiosidade')) {
-        setChatState('curiosity');
-        return curiosityStrategy();
-      }
-      if (msg.includes('quiz')) {
-        setChatState('quiz');
-        return quizStrategy();
-      }
-      return defaultStrategy();
-    }
-
-    if (msg.includes('voltar')) {
-      setChatState('menu');
-      return {
-        sender: 'bot',
-        text: 'Ok! Vamos voltar ao menu principal. O que você gostaria de saber? Jogos, curiosidades ou quiz?'
-      };
-    }
-
-    if (msg.includes('mais') || msg.includes('continuar')) {
-      if (chatState === 'game') {
-        return gameStrategy();
-      }
-      if (chatState === 'curiosity') {
-        return curiosityStrategy();
-      }
-      if (chatState === 'quiz') {
-        setChatState('waitingAnswer');
-        return quizStrategy();
-      }
-    }
-
-    return defaultStrategy();
   };
 
   return (

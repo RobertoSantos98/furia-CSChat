@@ -1,38 +1,62 @@
+import { gameStrategy } from './gameStrategy';
+import { curiosityStrategy } from './curiosityStrategy';
+import { quizStrategy } from './quizStrategy';
+import { upcomingGamesStrategy } from './upComingGameStrategy';
+import { playersStrategy } from './playersStrategy';
+import { torcidaStrategy } from './torcidaStrategy';
 import { Message } from '../types/message';
 
-// Respostas simples (não precisam do argumento `msg`)
-export const gameStrategy = (): Message => ({
-  sender: 'bot',
-  text: 'O próximo jogo é contra a NAVI, dia 26 às 15h! Quer saber mais sobre a FURIA ou voltar ao menu? Digite "mais" ou "voltar".'
-});
+let currentState: 'menu' | 'quiz' | 'game' | 'curiosity' | 'waitingAnswer' = 'menu';
 
-export const curiosityStrategy = (): Message => ({
-  sender: 'bot',
-  text: 'Você sabia que a FURIA foi fundada em 2017 e é uma das principais organizações de esports do Brasil? Quer saber mais ou voltar ao menu? Digite "mais" ou "voltar".'
-});
+export const getBotResponse = (msg: string): Message => {
+  const lowerMsg = msg.toLowerCase();
 
-export const quizStrategy = (): Message => ({
-  sender: 'bot',
-  text: 'Vamos começar o quiz! Em que ano a FURIA foi fundada? a) 2015 b) 2017 c) 2019. Digite sua resposta ou "voltar" para retornar ao menu.'
-});
-
-export const defaultStrategy = (): Message => ({
-  sender: 'bot',
-  text: 'Não entendi muito bem... Tente perguntar sobre jogos, curiosidades ou quiz! Se quiser voltar ao menu, digite "voltar".'
-});
-
-// Resposta do quiz, precisa do argumento `msg`
-export const handleQuizResponse = (msg: string): Message => {
-  const correctAnswer = '2017'; // Resposta correta do quiz
-  if (msg === correctAnswer) {
+  if (lowerMsg.includes('voltar')) {
+    currentState = 'menu';
     return {
       sender: 'bot',
-      text: 'Correto! A FURIA foi fundada em 2017. Quer continuar o quiz ou voltar ao menu? Digite "continuar" ou "voltar".'
-    };
-  } else {
-    return {
-      sender: 'bot',
-      text: 'Resposta errada! A resposta correta é 2017. Quer tentar novamente ou voltar ao menu? Digite "tentar novamente" ou "voltar".'
+      text: 'Ok! Voltamos ao menu principal. Você quer saber sobre: jogos, curiosidades, quiz, agenda, jogadores ou torcida?'
     };
   }
+
+
+  if (currentState === 'quiz') {
+    const response = quizStrategy(msg);
+    if (response.text.includes('Fim') || response.text.includes('Desisto')) {
+      currentState = 'menu';
+    }
+    return response;
+  }
+
+  if (lowerMsg.includes('quiz')) {
+    currentState = 'quiz';
+    return quizStrategy(); 
+  }
+
+  if (lowerMsg.includes('jogo') || lowerMsg.includes('partida')) {
+    currentState = 'game';
+    return gameStrategy();
+  }
+
+  if (lowerMsg.includes('curiosidade')) {
+    currentState = 'curiosity';
+    return curiosityStrategy();
+  }
+
+  if (lowerMsg.includes('próximos jogos') || lowerMsg.includes('agenda')) {
+    return upcomingGamesStrategy();
+  }
+
+  if (lowerMsg.includes('jogadores') || lowerMsg.includes('time')) {
+    return playersStrategy();
+  }
+
+  if (lowerMsg.includes('torcida') || lowerMsg.includes('simular')) {
+    return torcidaStrategy();
+  }
+
+  return {
+    sender: 'bot',
+    text: 'Não entendi. Você pode perguntar sobre: jogos, curiosidades, quiz, agenda, jogadores ou torcida.'
+  };
 };
