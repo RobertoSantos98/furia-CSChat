@@ -38,9 +38,9 @@ export const getBotResponse = (msg: string): Message => {
     return gameStrategy();
   }
 
-  if (lowerMsg.includes('curiosidade')) {
+  if (lowerMsg.includes('curiosidade') || lowerMsg.includes('curiosidade')) {
     currentState = 'curiosity';
-    return curiosityStrategy();
+    return curiosityStrategy(msg);
   }
 
   if (lowerMsg.includes('próximos jogos') || lowerMsg.includes('agenda')) {
