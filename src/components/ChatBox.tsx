@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Message } from '../types/message';
-import { getBotResponse } from '../strategies/chatStrategies';
+import { getBotResponse } from '../strategies/chatFactory';
 
 const ChatBox: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([

@@ -7,7 +7,6 @@ let isAwaitingAnswer = false;
 export const quizStrategy = (msg?: string): Message => {
   const currentQuestion = quizData[currentQuestionIndex];
 
-  // Se ainda não fez a pergunta
   if (!isAwaitingAnswer || !msg) {
     isAwaitingAnswer = true;
 

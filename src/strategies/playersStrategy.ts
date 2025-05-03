@@ -1,10 +1,49 @@
 import { Message } from '../types/message';
+import players from '../data/player.json';
 
-export const playersStrategy = (): Message => ({
-  sender: 'bot',
-  text: `📅 Próximos Jogos:
-- 02/05 vs NAVI às 15h (IEM Dallas)
-- 05/05 vs Vitality às 13h (IEM Dallas)
+let currentPlayerIndex = 0;
+let isShowingPlayers = false;
 
-⚠️ Horários podem mudar. Fique ligado nas redes da FURIA!`
-});
+export const playersStrategy = (msg?: string): Message => {
+  if (!isShowingPlayers || !msg) {
+    isShowingPlayers = true;
+    currentPlayerIndex = 0;
+
+    const player = players[currentPlayerIndex];
+    return {
+      sender: 'bot',
+      text: `👤 *${player.title}*\n${player.text}\n\nDigite "mais" para outro jogador ou "voltar" para o menu.`
+    };
+  }
+
+  const input = msg.trim().toLowerCase();
+
+  if (input.includes('mais') || input.includes('+') || input.includes('próximo')|| input.includes("outro")){
+    currentPlayerIndex++;
+
+    if (currentPlayerIndex >= players.length) {
+      currentPlayerIndex = 0;
+    }
+
+    const player = players[currentPlayerIndex];
+    return {
+      sender: 'bot',
+      text: `👤 *${player.title}*\n${player.text}\n\nDigite "mais" para outro jogador ou "voltar" para o menu.`
+    };
+  }
+
+  if (input === 'voltar') {
+    isShowingPlayers = false;
+    currentPlayerIndex = 0;
+
+    return {
+      sender: 'bot',
+      text: 'Voltando ao menu principal. Você quer saber sobre: jogos, curiosidades, quiz, agenda, jogadores ou torcida?'
+    };
+  }
+
+  return {
+    sender: 'bot',
+    text: 'Não entendi. Digite "mais" para outro jogador ou "voltar" para o menu.'
+  };
+};
